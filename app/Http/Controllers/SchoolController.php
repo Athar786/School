@@ -35,7 +35,7 @@ class SchoolController extends Controller
         $school = School::create([
             'name' => $request->name,
             'email' => $request->email,
-            'logo' => $newImg,
+            'logo' => $image,
             'website' => $request->website,
         ]);
         return response()->json([

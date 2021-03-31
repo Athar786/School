@@ -24,7 +24,8 @@ class CampusesController extends Controller
             return response()->json($validator->errors()->toJson(),400);
         }
 
-        $scl_email = DB::table('schools')->select('email')->where('id','=',$request->school_id)->get();
+        $scl_email = DB::table('schools')->select('email')->where('id',$request->school_id)->first();
+        
         $campuse = Campuses::create([
             'name' => $request->name,
             'email'=>$request->email,
@@ -33,9 +34,11 @@ class CampusesController extends Controller
             'address'=>$request->address,
         ]);
 
+      
+
         $email_data = array(
             'name' => $request->name,
-            'email'=>$request->email,
+            'email'=>$scl_email->email,
         );
 
         Mail::send('welcome_email',$email_data, function ($message) use($email_data) {
